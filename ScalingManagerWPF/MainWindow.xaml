@@ -1,0 +1,198 @@
+<Window x:Class="ScalingManager.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Lossless Scaling Manager 2.0 - Native Window Embedding"
+        Height="700" Width="1000"
+        MinHeight="600" MinWidth="900"
+        Background="#FF1E1E2E"
+        WindowStartupLocation="CenterScreen">
+    
+    <Window.Resources>
+        <!-- Estilos modernos -->
+        <Style x:Key="ModernButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#FF3B4252"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#FF5E81AC"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="15,8"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="6">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FF5E81AC"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#FF434C5E"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <Style x:Key="StatusTextStyle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#FFECEFF4"/>
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="Margin" Value="5,2"/>
+        </Style>
+        
+        <Style x:Key="HeaderTextStyle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#FF88C0D0"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+    </Window.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="200"/>
+        </Grid.RowDefinitions>
+        
+        <!-- Header -->
+        <Border Grid.Row="0" Background="#FF2E3440" Padding="20,15">
+            <StackPanel>
+                <TextBlock Text="🎮 Lossless Scaling Manager 2.0" 
+                          FontSize="18" FontWeight="Bold" 
+                          Foreground="#FF88C0D0" 
+                          HorizontalAlignment="Center"/>
+                <TextBlock Text="Native Window Embedding with C# WPF"
+                          FontSize="12" 
+                          Foreground="#FFD8DEE9"
+                          HorizontalAlignment="Center"
+                          Margin="0,5,0,0"/>
+            </StackPanel>
+        </Border>
+        
+        <!-- Main Content Area -->
+        <Grid Grid.Row="1" Margin="20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="300"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <!-- Control Panel -->
+            <Border Grid.Column="0" Background="#FF3B4252" CornerRadius="10" Padding="15" Margin="0,0,10,0">
+                <StackPanel>
+                    <!-- Registry Section -->
+                    <TextBlock Text="📝 Registry Status" Style="{StaticResource HeaderTextStyle}"/>
+                    <StackPanel Margin="10,5">
+                        <TextBlock x:Name="RegistryStatusText" Text="Status: Verificando..." Style="{StaticResource StatusTextStyle}"/>
+                        <TextBlock x:Name="RegistryValueText" Text="Valor: -" Style="{StaticResource StatusTextStyle}"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,5">
+                            <Button x:Name="CheckRegistryBtn" Content="🔍 Verificar" Style="{StaticResource ModernButtonStyle}" Click="CheckRegistryBtn_Click"/>
+                            <Button x:Name="FixRegistryBtn" Content="🔧 Corrigir" Style="{StaticResource ModernButtonStyle}" Click="FixRegistryBtn_Click"/>
+                        </StackPanel>
+                    </StackPanel>
+                    
+                    <Separator Background="#FF4C566A" Margin="0,10"/>
+                    
+                    <!-- Process Section -->
+                    <TextBlock Text="⚙️ Scaling Process" Style="{StaticResource HeaderTextStyle}"/>
+                    <StackPanel Margin="10,5">
+                        <TextBlock x:Name="ProcessStatusText" Text="Status: Parado" Style="{StaticResource StatusTextStyle}"/>
+                        <TextBlock x:Name="ProcessPidText" Text="PID: -" Style="{StaticResource StatusTextStyle}"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,5">
+                            <Button x:Name="StartProcessBtn" Content="🚀 Iniciar" Style="{StaticResource ModernButtonStyle}" Click="StartProcessBtn_Click"/>
+                            <Button x:Name="StopProcessBtn" Content="🛑 Parar" Style="{StaticResource ModernButtonStyle}" Click="StopProcessBtn_Click" IsEnabled="False"/>
+                        </StackPanel>
+                    </StackPanel>
+                    
+                    <Separator Background="#FF4C566A" Margin="0,10"/>
+                    
+                    <!-- Embedding Section -->
+                    <TextBlock Text="🔗 Window Embedding" Style="{StaticResource HeaderTextStyle}"/>
+                    <StackPanel Margin="10,5">
+                        <TextBlock x:Name="EmbedStatusText" Text="Status: Desintegrado" Style="{StaticResource StatusTextStyle}"/>
+                        <TextBlock x:Name="EmbedHandleText" Text="Handle: -" Style="{StaticResource StatusTextStyle}"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,5">
+                            <Button x:Name="EmbedBtn" Content="📦 Integrar" Style="{StaticResource ModernButtonStyle}" Click="EmbedBtn_Click" IsEnabled="False"/>
+                            <Button x:Name="UnembedBtn" Content="↗️ Libertar" Style="{StaticResource ModernButtonStyle}" Click="UnembedBtn_Click" IsEnabled="False"/>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+            
+            <!-- Embedded Window Area -->
+            <Border Grid.Column="1" Background="#FF434C5E" CornerRadius="10" Padding="10">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    
+                    <TextBlock Grid.Row="0" Text="🎮 Área de Integração - Scaling.exe" Style="{StaticResource HeaderTextStyle}" HorizontalAlignment="Center"/>
+                    
+                    <!-- Área onde a janela será integrada -->
+                    <Border x:Name="EmbedArea" Grid.Row="1" 
+                            Background="#FF2E3440" 
+                            CornerRadius="8" 
+                            Margin="10"
+                            BorderBrush="#FF5E81AC"
+                            BorderThickness="2">
+                        <StackPanel x:Name="PlaceholderContent" 
+                                   HorizontalAlignment="Center" 
+                                   VerticalAlignment="Center">
+                            <TextBlock Text="🎯" FontSize="48" 
+                                      Foreground="#FF81A1C1" 
+                                      HorizontalAlignment="Center"/>
+                            <TextBlock Text="Janela do Scaling.exe aparecerá aqui" 
+                                      FontSize="14" 
+                                      Foreground="#FFD8DEE9" 
+                                      HorizontalAlignment="Center"
+                                      Margin="0,10,0,0"/>
+                            <TextBlock Text="• Inicie o Scaling.exe primeiro" 
+                                      FontSize="12" 
+                                      Foreground="#FFBF616A" 
+                                      HorizontalAlignment="Center"
+                                      Margin="0,10,0,0"/>
+                            <TextBlock Text="• Clique em 'Integrar' para incorporar a janela" 
+                                      FontSize="12" 
+                                      Foreground="#FFBF616A" 
+                                      HorizontalAlignment="Center"/>
+                            <TextBlock Text="• Interação direta será possível após integração" 
+                                      FontSize="12" 
+                                      Foreground="#FFA3BE8C" 
+                                      HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </Border>
+        </Grid>
+        
+        <!-- Log Area -->
+        <Border Grid.Row="2" Background="#FF3B4252" Margin="20,0,20,20" CornerRadius="10">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                
+                <TextBlock Grid.Row="0" Text="📋 Log de Atividades" Style="{StaticResource HeaderTextStyle}" Margin="15,10"/>
+                
+                <ScrollViewer Grid.Row="1" x:Name="LogScrollViewer" Margin="15,0,15,15" VerticalScrollBarVisibility="Auto">
+                    <TextBlock x:Name="LogTextBlock" 
+                              Background="#FF2E3440" 
+                              Padding="10" 
+                              Foreground="#FFECEFF4"
+                              FontFamily="Consolas"
+                              FontSize="11"
+                              TextWrapping="Wrap"/>
+                </ScrollViewer>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
