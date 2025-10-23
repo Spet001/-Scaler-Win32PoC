@@ -1,7 +1,7 @@
 # Win32 Window Capture & Embedding POC
 
 ## Overview
-Este projeto é uma **Prova de Conceito (POC)** demonstrando como usar APIs nativas do Windows (Win32/user32.dll) para capturar e embeddar janelas de outras aplicações. O exemplo prático utiliza o Lossless Scaling como caso de uso.
+Este projeto é uma **Prova de Conceito (POC)** demonstrando como usar APIs nativas do Windows (Win32/user32.dll) para capturar e embeddar janelas de outras aplicações. 
 
 ## 🎯 Objetivo do POC
 Demonstrar as capacidades das **APIs Win32** para:
