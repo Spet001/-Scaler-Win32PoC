@@ -98,19 +98,9 @@ ScalingManagerWPF/
 - .NET 8.0 Runtime
 - Visual Studio 2022 ou VS Code
 
-### 📁 Setup do Executável de Exemplo
-Para testar a aplicação, você precisa de um executável de exemplo. A aplicação procura nos seguintes caminhos (nesta ordem):
-
-1. `ScalingManagerWPF/bin/Debug/net8.0-windows/Scaling/Scaling.exe`
-
-2. `ScalingManagerWPF/Scaling/Scaling.exe`
-
-**📦 Arquivo de Exemplo**: 
-- Descompacte `ScalingManagerWPF/example-app.zip` para obter um executável de exemplo
-- Crie a pasta `ScalingManagerWPF/Scaling/` e coloque o executável lá
 
 
-**🔒 Senha do arquivo**: `scaler` (para arquivos protegidos)
+
 
 ### Compilação
 ```bash
